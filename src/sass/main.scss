@@ -8,7 +8,7 @@ $btnColor1: lightgray;
 body {
   font-family: 'Roboto', sans-serif;
   width: 100%;
-  height: 100vh;
+  min-height: 100%;
   background-image: linear-gradient(
     to bottom,
     $bodyColor1 0%,
@@ -110,6 +110,7 @@ body {
   }
 
   &__link {
+    color: $searchBoxFontColor;
     text-decoration: none;
   }
 
