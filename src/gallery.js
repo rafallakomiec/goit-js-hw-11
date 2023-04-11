@@ -39,7 +39,7 @@ async function onSubmit(event) {
   Notify.success(`Hooray! We found ${totalImgs} images!`);
 
   loadImgs(response.hits);
-  SimpleLightbox.refresh(lightbox);
+  lightbox.refresh(gallery);
 }
 
 async function fetchImgs(query) {
@@ -129,5 +129,5 @@ async function loadMoreImgs() {
   });
 
   loadImgs(response.hits);
-  SimpleLightbox.refresh(lightbox);
+  lightbox.refresh(gallery);
 }
