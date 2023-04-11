@@ -3,10 +3,7 @@ import 'notiflix/dist/notiflix-3.2.6.min.css';
 const axios = require('axios').default;
 export { fetchImgs };
 
-let currentPage = 1;
-let loadedImgs = 0;
-
-async function fetchImgs(query) {
+async function fetchImgs(query, currentPage, loadedImgs) {
   try {
     if (query.length > 100) {
       throw new Error('Please enter maximum 100 characters...');
@@ -41,7 +38,7 @@ async function fetchImgs(query) {
 
     if (result.status >= 200 && result.status < 300) {
       loadedImgs += 40;
-      return result.data;
+      return [result.data, currentPage, loadedImgs];
     } else {
       throw new Error(result.status + result.statusText);
     }

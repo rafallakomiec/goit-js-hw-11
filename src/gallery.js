@@ -32,14 +32,19 @@ async function onSubmit(event) {
     gallery.innerHTML = '';
     loadMoreBtn.style.display = 'none';
 
-    const response = await fetchImgs(input).catch(() => {
-      return;
-    });
+    const response = await fetchImgs(input, currentPage, loadedImgs).catch(
+      () => {
+        return;
+      }
+    );
 
-    totalImgs = response.total;
+    totalImgs = response[0].total;
     Notify.success(`Hooray! We found ${totalImgs} images!`);
 
-    loadImgs(response.hits);
+    currentPage = response[1];
+    loadedImgs = response[2];
+
+    loadImgs(response[0].hits);
     lightbox = new SimpleLightbox('.gallery a');
   } catch (error) {
     return;
@@ -82,12 +87,14 @@ async function loadMoreImgs() {
   }
 
   currentPage += 1;
-  const response = await fetchImgs(input).catch(() => {
+  const response = await fetchImgs(input, currentPage, loadedImgs).catch(() => {
     currentPage -= 1;
     Notify.failure('Something went wrong... Please try again...');
     return;
   });
 
-  loadImgs(response.hits);
+  currentPage = response[1];
+  loadedImgs = response[2];
+  loadImgs(response[0].hits);
   lightbox.refresh();
 }
