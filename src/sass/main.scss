@@ -1,0 +1,68 @@
+$bodyColor1: gray;
+$bodyColor2: white;
+$searchBoxColor1: lightblue;
+$searchBoxColor2: navy;
+$searchBoxFontColor: black;
+$btnColor1: lightgray;
+
+body {
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(
+    to bottom,
+    $bodyColor1 0%,
+    $bodyColor2 100%
+  );
+}
+
+.header {
+  width: 100%;
+  margin: 0;
+  padding: 50px;
+  background-image: linear-gradient(
+    to bottom,
+    $searchBoxColor1 0%,
+    $searchBoxColor2 100%
+  );
+}
+
+.search-box {
+
+  &__container {
+    display: flex;
+    margin: 0 auto;
+    width: 800px;
+    height: 70px;
+  }
+
+  &__input {
+    margin: 0;
+    padding: 11px;
+    width: 600px;
+    height: 70px;
+    font-size: 48px;
+    color: $searchBoxFontColor;
+    background-color: $bodyColor2;
+    outline: none;
+    border: none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
+  &__btn {
+    margin: 0;
+    padding: 11px;
+    width: 200px;
+    height: 70px;
+    background-color: $btnColor1;
+    outline: none;
+    border: none;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  &__btn:hover {
+    cursor: pointer;
+  }
+}
