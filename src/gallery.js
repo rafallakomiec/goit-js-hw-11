@@ -39,7 +39,7 @@ async function onSubmit(event) {
   Notify.success(`Hooray! We found ${totalImgs} images!`);
 
   loadImgs(response.hits);
-  lightbox = new SimpleLightbox(document.querySelector('.gallery a'));
+  lightbox = new SimpleLightbox('.gallery a');
 }
 
 async function fetchImgs(query) {
