@@ -86,7 +86,7 @@ async function fetchImgs(query) {
       throw new Error(result.status + result.statusText);
     }
   } catch (error) {
-    Notify.failure(error.message);
+    return;
   }
 }
 
