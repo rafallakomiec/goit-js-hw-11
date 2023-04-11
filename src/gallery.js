@@ -1,4 +1,4 @@
-import { fetchImgs, currentPage, loadedImgs } from './fetchImgs';
+import { fetchImgs } from './fetchImgs';
 import 'modern-normalize/modern-normalize.css';
 import { Notify } from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.6.min.css';
@@ -11,6 +11,8 @@ const gallery = document.querySelector('.gallery');
 let lightbox;
 
 let input = '';
+let currentPage = 1;
+let loadedImgs = 0;
 let totalImgs = 0;
 
 form.addEventListener('submit', onSubmit);

@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.6.min.css';
 const axios = require('axios').default;
-export { fetchImgs, currentPage, loadedImgs };
+export { fetchImgs };
 
 let currentPage = 1;
 let loadedImgs = 0;
