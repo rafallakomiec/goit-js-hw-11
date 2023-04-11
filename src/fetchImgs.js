@@ -1,4 +1,10 @@
-export { fetchImgs };
+import { Notify } from 'notiflix';
+import 'notiflix/dist/notiflix-3.2.6.min.css';
+const axios = require('axios').default;
+export { fetchImgs, currentPage, loadedImgs };
+
+let currentPage = 1;
+let loadedImgs = 0;
 
 async function fetchImgs(query) {
   try {
@@ -9,7 +15,7 @@ async function fetchImgs(query) {
       throw new Error('Please enter meaningful query...');
     }
 
-    const encodedQuery = encodeURIComponent(query.replaceAll(' ', '+'));
+    const encodedQuery = query.replaceAll(' ', '+');
 
     const result = await axios.get('https://pixabay.com/api/', {
       params: {
