@@ -7,8 +7,8 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const form = document.querySelector('#search-form');
 const loadMoreBtn = document.querySelector('#load-more-btn');
-const gallery = document.querySelector('.gallery');
-const lightbox = new SimpleLightbox(gallery);
+const gallery = document.querySelector('.gallery a');
+const lightbox = new SimpleLightbox(document.querySelector('.gallery a'));
 
 let input = '';
 let currentPage = 1;
@@ -39,7 +39,7 @@ async function onSubmit(event) {
   Notify.success(`Hooray! We found ${totalImgs} images!`);
 
   loadImgs(response.hits);
-  lightbox.refresh(gallery);
+  lightbox.refresh();
 }
 
 async function fetchImgs(query) {
@@ -129,5 +129,5 @@ async function loadMoreImgs() {
   });
 
   loadImgs(response.hits);
-  lightbox.refresh(gallery);
+  lightbox.refresh();
 }
