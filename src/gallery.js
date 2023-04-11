@@ -42,7 +42,7 @@ async function onSubmit(event) {
     loadImgs(response.hits);
     lightbox = new SimpleLightbox('.gallery a');
   } catch (error) {
-    Notify.failure(error.message);
+    return;
   }
 }
 
@@ -86,7 +86,7 @@ async function fetchImgs(query) {
       throw new Error(result.status + result.statusText);
     }
   } catch (error) {
-    return;
+    Notify.failure(error.message);
   }
 }
 
