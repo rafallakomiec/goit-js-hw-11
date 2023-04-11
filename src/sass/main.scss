@@ -19,16 +19,18 @@ body {
 .header {
   width: 100%;
   margin: 0;
-  padding: 50px;
+  padding: 25px;
   background-image: linear-gradient(
     to bottom,
     $searchBoxColor1 0%,
     $searchBoxColor2 100%
   );
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .search-box {
-
   &__container {
     display: flex;
     margin: 0 auto;
@@ -80,17 +82,20 @@ body {
 }
 
 .body-container {
-  margin: 25px auto;
+  margin: 145px auto 25px;
   padding: 0 25px;
   max-width: 1000px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  justify-items: center;
   flex-wrap: nowrap;
 }
 
 .gallery {
   margin: 0 auto;
+  padding: 0;
   list-style: none;
   display: flex;
   gap: 20px;
@@ -98,7 +103,7 @@ body {
   align-items: baseline;
 
   &__card {
-    padding: 10px;
+    padding: 0;
     text-align: center;
     width: 210px;
     background-color: $btnColor1;
@@ -115,7 +120,7 @@ body {
 
     &-info-cont {
       margin: 0;
-      padding: 0;
+      padding: 0 10px 10px;
       list-style: none;
       display: flex;
       flex-direction: row;
@@ -175,4 +180,5 @@ body {
 
 .load-more__btn:hover {
   cursor: pointer;
+  box-shadow: 2px 2px 2px 1px black;
 }
