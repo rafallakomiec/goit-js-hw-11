@@ -2,16 +2,45 @@ import 'modern-normalize/modern-normalize.css';
 import { Notify } from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.6.min.css';
 const axios = require('axios').default;
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const form = document.querySelector('#search-form');
-const input = form.searchQuery.value;
 const loadMoreBtn = document.querySelector('#load-more-btn');
+const gallery = document.querySelector('.gallery');
+const lightbox = new SimpleLightbox(gallery);
 
+let input = '';
 let currentPage = 1;
 let loadedImgs = 0;
 let totalImgs = 0;
 
-function onSubmit(event) {}
+form.addEventListener('submit', onSubmit);
+loadMoreBtn.addEventListener('click', loadMoreImgs);
+
+async function onSubmit(event) {
+  event.preventDefault();
+
+  Notify.info('Processing your request! Please wait...');
+
+  input = form.searchQuery.value;
+  currentPage = 1;
+  loadedImgs = 0;
+  totalImgs = 0;
+
+  gallery.innerHTML = '';
+  loadMoreBtn.style.display = 'none';
+
+  const response = await fetchImgs(input).catch(() => {
+    return;
+  });
+
+  totalImgs = response.total;
+  Notify.success(`Hooray! We found ${totalImgs} images!`);
+
+  loadImgs(response.hits);
+  lightbox.refresh();
+}
 
 async function fetchImgs(query) {
   try {
@@ -47,6 +76,7 @@ async function fetchImgs(query) {
     }
 
     if (result.status >= 200 && result.status < 300) {
+      loadedImgs += 40;
       return result.data;
     } else {
       throw new Error(result.status + result.statusText);
@@ -56,20 +86,48 @@ async function fetchImgs(query) {
   }
 }
 
-/* <li class="gallery__card">
-  <img class="gallery__img" src="./images/search.svg" loading="lazy" />
-  <ul class="gallery__img-info-cont">
-    <li class="gallery__img-info-likes">
-      <span class="img-info__title">Likes</span>111111
-    </li>
-    <li class="gallery__img-info-views">
-      <span class="img-info__title">Views</span>111111
-    </li>
-    <li class="gallery__img-info-comments">
-      <span class="img-info__title">Comments</span>111111
-    </li>
-    <li class="gallery__img-info-downloads">
-      <span class="img-info__title">Downloads</span>111111
-    </li>
-  </ul>
-</li>; */
+function loadImgs(array) {
+  for (const img of array) {
+    gallery.insertAdjacentHTML(
+      'beforeend',
+      `<li class="gallery__card"><a class="gallery__link" href="${img.largeImageURL}">
+    <img class="gallery__img" src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
+    <ul class="gallery__img-info-cont">
+        <li class="gallery__img-info-likes">
+        <span class="img-info__title">Likes</span>${img.likes}
+        </li>
+        <li class="gallery__img-info-views">
+        <span class="img-info__title">Views</span>${img.views}
+        </li>
+        <li class="gallery__img-info-comments">
+        <span class="img-info__title">Comments</span>${img.comments}
+        </li>
+        <li class="gallery__img-info-downloads">
+        <span class="img-info__title">Downloads</span>${img.downloads}
+        </li>
+    </ul>
+  </a>
+</li>`
+    );
+  }
+
+  loadMoreBtn.style.display = 'flex';
+}
+
+async function loadMoreImgs() {
+  if (loadedImgs >= totalImgs) {
+    Notify.info("We're sorry, but you've reached the end of search results.");
+    loadMoreBtn.style.display = 'none';
+    return;
+  }
+
+  currentPage += 1;
+  const response = await fetchImgs(input).catch(() => {
+    currentPage -= 1;
+    Notify.failure('Something went wrong... Please try again...');
+    return;
+  });
+
+  loadImgs(response.hits);
+  lightbox.refresh();
+}
