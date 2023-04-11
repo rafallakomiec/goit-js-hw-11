@@ -19,27 +19,31 @@ form.addEventListener('submit', onSubmit);
 loadMoreBtn.addEventListener('click', loadMoreImgs);
 
 async function onSubmit(event) {
-  event.preventDefault();
+  try {
+    event.preventDefault();
 
-  Notify.info('Processing your request! Please wait...');
+    Notify.info('Processing your request! Please wait...');
 
-  input = form.searchQuery.value;
-  currentPage = 1;
-  loadedImgs = 0;
-  totalImgs = 0;
+    input = form.searchQuery.value;
+    currentPage = 1;
+    loadedImgs = 0;
+    totalImgs = 0;
 
-  gallery.innerHTML = '';
-  loadMoreBtn.style.display = 'none';
+    gallery.innerHTML = '';
+    loadMoreBtn.style.display = 'none';
 
-  const response = await fetchImgs(input).catch(() => {
-    return;
-  });
+    const response = await fetchImgs(input).catch(() => {
+      return;
+    });
 
-  totalImgs = response.total;
-  Notify.success(`Hooray! We found ${totalImgs} images!`);
+    totalImgs = response.total;
+    Notify.success(`Hooray! We found ${totalImgs} images!`);
 
-  loadImgs(response.hits);
-  lightbox = new SimpleLightbox('.gallery a');
+    loadImgs(response.hits);
+    lightbox = new SimpleLightbox('.gallery a');
+  } catch (error) {
+    Notify.failure(error.message);
+  }
 }
 
 async function fetchImgs(query) {
